@@ -554,8 +554,8 @@ firewall_ufw() {
 
   # pointing to /dev/null silences the command output
   ufw allow ssh >/dev/null
-  ufw allow 10000 >/dev/null
-  ufw allow 20000 >/dev/null
+  ufw allow 5000 >/dev/null
+  ufw allow 5003 >/dev/null
 
   [ "$CONFIGURE_LETSENCRYPT" == true ] && ufw allow http >/dev/null
   [ "$CONFIGURE_LETSENCRYPT" == true ] && ufw allow https >/dev/null
@@ -579,8 +579,8 @@ firewall_firewalld() {
 
   # Configure
   firewall-cmd --add-service=ssh --permanent -q                                           # Port 220
-  firewall-cmd --add-port 10000/tcp --permanent -q                                         # Port 8089
-  firewall-cmd --add-port 20000/tcp --permanent -q                                         # Port 2029
+  firewall-cmd --add-port 5000/tcp --permanent -q                                         # Port 8089
+  firewall-cmd --add-port 5003/tcp --permanent -q                                         # Port 2029
   [ "$CONFIGURE_LETSENCRYPT" == true ] && firewall-cmd --add-service=http --permanent -q  # Port 80
   [ "$CONFIGURE_LETSENCRYPT" == true ] && firewall-cmd --add-service=https --permanent -q # Port 443
   [ "$CONFIGURE_DB_FIREWALL" == true ] && firewall-cmd --add-service=mysql --permanent -q 
@@ -788,7 +788,7 @@ function goodbye {
   echo "* systemctl start wings"
   echo "*"
   echo -e "* ${COLOR_RED}Note${COLOR_NC}: It is recommended to enable swap (for Docker, read more about it in official documentation)."
-  [ "$CONFIGURE_FIREWALL" == false ] && echo -e "* ${COLOR_RED}Note${COLOR_NC}: If you haven't configured your firewall, ports 8080 and 2022 needs to be open."
+  [ "$CONFIGURE_FIREWALL" == false ] && echo -e "* ${COLOR_RED}Note${COLOR_NC}: If you haven't configured your firewall, ports and 2022 needs to be open."
   print_brake 70
   echo ""
 }
